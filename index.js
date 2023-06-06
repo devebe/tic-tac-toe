@@ -55,22 +55,43 @@ const dataModule = (() => {
 
 const viewModule = (() => {
 
-    const viewTile = (parent, name, text) => {
+    const viewTile = (parent, name, text, tilePosition) => {
         const child = document.createElement('div');
         parent = document.querySelector(parent);
-        child.setAttribute('id', `${name}`);
+        child.setAttribute('class', `${name}`);
+        child.setAttribute('id', `${tilePosition}`);
         child.textContent = text;
         parent.appendChild(child);
     };
 
-    const buildBoard = (parent, name, text) => {
+    function buildBoard(parent, name, text) {
         const tiles = 9;
-        for (let i = 0; i < (tiles - 1); i++) {
-            viewTile(parent, name, text);
+        for (let i = 0; i < tiles; i++) {
+            viewTile(parent, name, text, (i + 1));
         };
     };
 
-    return {
-        buildBoard
-    }
+    return {buildBoard};
+
 })();
+
+const controllerModule = (() => {
+    const playerX = dataModule.playerFactory('X');
+    const playerO = dataModule.playerFactory('O');
+    
+    document.addEventListener('click', (e) => {
+        console.log(e.target.id);
+        playerX.setTile(e.target.id);
+        console.log(playerX);
+        console.log(dataModule.board);
+        e.target.textContent = playerX.name;
+    });
+})();
+
+const game = (() => {
+    viewModule.buildBoard('div.gameboard','tile','');
+    
+    return console.log(dataModule.board);
+})();
+
+//.attributes.tileposition.value
