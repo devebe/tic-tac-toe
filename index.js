@@ -14,8 +14,7 @@
 // - ownedBy (playerName) [empty], 
 // - position (number) [0]
 
-
-const gameBoardAlternative = (() => {
+const dataModule = (() => {
 
     const board = [];
 
@@ -25,13 +24,13 @@ const gameBoardAlternative = (() => {
         return {tilePosition, owner, isChecked};
     };
     
-    const buildBoard = (num) => {
-        if (num == 0) {
+    const buildBoard = (tiles) => {
+        if (tiles == 0) {
             return;
         }
         else {
-            board[num - 1] = tileFactory(num);
-            buildBoard(num - 1);
+            board[tiles - 1] = tileFactory(tiles);
+            buildBoard(tiles - 1);
         };
     };
 
@@ -42,6 +41,7 @@ const gameBoardAlternative = (() => {
             if (!tile.owner) {
                 tile.isChecked = true;
                 tile.owner = name;
+                ownsTiles.push(tile);
             };
         };
         return {name, ownsTiles, setTile};
@@ -50,4 +50,27 @@ const gameBoardAlternative = (() => {
     buildBoard(9);
 
     return {board, playerFactory};
+
+})();
+
+const viewModule = (() => {
+
+    const viewTile = (parent, name, text) => {
+        const child = document.createElement('div');
+        parent = document.querySelector(parent);
+        child.setAttribute('id', `${name}`);
+        child.textContent = text;
+        parent.appendChild(child);
+    };
+
+    const buildBoard = (parent, name, text) => {
+        const tiles = 9;
+        for (let i = 0; i < (tiles - 1); i++) {
+            viewTile(parent, name, text);
+        };
+    };
+
+    return {
+        buildBoard
+    }
 })();
