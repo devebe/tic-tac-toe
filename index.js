@@ -78,14 +78,23 @@ const viewModule = (() => {
 const controllerModule = (() => {
     const playerX = dataModule.playerFactory('X');
     const playerO = dataModule.playerFactory('O');
+    const turns = 0;
     
     document.addEventListener('click', (e) => {
-        console.log(e.target.id);
-        playerX.setTile(e.target.id);
+        if (turns % 2 == 0) {
+            playerX.setTile(e.target.id);
+            console.log(playerX);
+        }
+        else (turns % 2 == 1) {
+            playerO.setTile(e.target.id);
+            console.log(playerO);
+        }
         console.log(playerX);
         console.log(dataModule.board);
         e.target.textContent = playerX.name;
+        turns++;
     });
+    
 })();
 
 const game = (() => {

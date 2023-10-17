@@ -1,0 +1,21 @@
+.gameboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 62vh;
+    gap: 1vh;
+    background-color: #252525;
+    align-items: center;
+    justify-items: center;
+}
+
+.tile {
+    display: flex;
+    height: 20vh;
+    width: 20vh;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em; 
+}
+
