@@ -85,7 +85,7 @@ const controllerModule = (() => {
             playerX.setTile(e.target.id);
             console.log(playerX);
         }
-        else (turns % 2 == 1) {
+        else {
             playerO.setTile(e.target.id);
             console.log(playerO);
         }
