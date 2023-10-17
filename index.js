@@ -81,9 +81,9 @@ const controllerModule = (() => {
     let turns = 0;
     
     document.addEventListener('click', (e) => {
-        if (turns % 2 == 0 && e.target.textContent == null) {
+        if (turns % 2 == 0) {
             playerX.setTile(e.target.id);
-            e.target.textContent = playerX.name;
+            e.target.textContent = dataModule.board[e.target.id].owner;
         }
         else {
             playerO.setTile(e.target.id);
