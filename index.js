@@ -38,7 +38,7 @@ const dataModule = (() => {
         let ownsTiles = [];
         const setTile = (tilePosition) => {
             let tile = board[tilePosition - 1];
-            if (!tile.owner) {
+            if (tile.owner == null) {
                 tile.isChecked = true;
                 tile.owner = name;
                 ownsTiles.push(tile);
@@ -78,21 +78,20 @@ const viewModule = (() => {
 const controllerModule = (() => {
     const playerX = dataModule.playerFactory('X');
     const playerO = dataModule.playerFactory('O');
-    const turns = 0;
+    let turns = 0;
     
     document.addEventListener('click', (e) => {
-        if (turns % 2 == 0) {
+        if (turns % 2 == 0 && e.target.textContent == null) {
             playerX.setTile(e.target.id);
-            console.log(playerX);
+            e.target.textContent = playerX.name;
         }
         else {
             playerO.setTile(e.target.id);
-            console.log(playerO);
+            e.target.textContent = playerO.name;
         }
-        console.log(playerX);
         console.log(dataModule.board);
-        e.target.textContent = playerX.name;
         turns++;
+        console.log(turns);
     });
     
 })();
