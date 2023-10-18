@@ -64,8 +64,7 @@ const viewModule = (() => {
         parent.appendChild(child);
     };
 
-    function buildBoard(parent, name, text) {
-        const tiles = 9;
+    function buildBoard(parent, name, text, tiles) {
         for (let i = 0; i < tiles; i++) {
             viewTile(parent, name, text, (i + 1));
         };
@@ -76,13 +75,17 @@ const viewModule = (() => {
 })();
 
 const controllerModule = (() => {
-    viewModule.buildBoard('div#gameboard','tile','');
-    dataModule.buildBoard(9);
+    const buildGame = (tiles) => {
+        viewModule.buildBoard('div#gameboard','tile','',tiles);
+        dataModule.buildBoard(tiles);
+    };
+
+    buildGame(9);
     
-    const playerX = dataModule.playerFactory('X');
-    const playerO = dataModule.playerFactory('O');
     let turns = 0;
     let dice = 'X';
+    const playerX = dataModule.playerFactory('X');
+    const playerO = dataModule.playerFactory('O');
     
     document.addEventListener('click', (e) => {
         if ( dice == 'X') {
@@ -129,16 +132,12 @@ const controllerModule = (() => {
     const btn = document.getElementById('restart');
     btn.addEventListener('click', (e) => {
         let oldGame = document.getElementById('gameboard');
-
         function removeAllChildNodes(parent) {
             while (parent.firstChild) {
                 parent.removeChild(parent.firstChild);
-            }
-        }
+            };
+        };
         removeAllChildNodes(oldGame);
-        viewModule.buildBoard('div#gameboard','tile','');
-        dataModule.buildBoard(9);
-        turns = 0;
-        dice = 'X';
+        buildGame(9);
     });
 })();
