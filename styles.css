@@ -63,7 +63,7 @@ h1 {
     align-items: center;
     padding: 1em 4em;
     background-color: #DADFE7;
-    border-bottom: 1px solid #627693;
+    border-bottom: 1px solid #aab9d0;
 }
 
 .container {
@@ -73,7 +73,7 @@ h1 {
     align-items: center;
 }
 
-.gameboard {
+#gameboard {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;

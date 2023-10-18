@@ -48,10 +48,8 @@ const dataModule = (() => {
         };
         return {name, ownsTiles, setTile};
     };
-   
-    buildBoard(9);
 
-    return {board, playerFactory};
+    return {board, playerFactory, buildBoard};
 
 })();
 
@@ -78,13 +76,16 @@ const viewModule = (() => {
 })();
 
 const controllerModule = (() => {
+    viewModule.buildBoard('div#gameboard','tile','');
+    dataModule.buildBoard(9);
+    
     const playerX = dataModule.playerFactory('X');
     const playerO = dataModule.playerFactory('O');
     let turns = 0;
     let dice = 'X';
     
     document.addEventListener('click', (e) => {
-        if ( dice === 'X') {
+        if ( dice == 'X') {
             let bool = playerX.setTile(e.target.id);
             e.target.textContent = dataModule.board[e.target.id - 1].owner;
             if(bool == true) {
@@ -121,14 +122,23 @@ const controllerModule = (() => {
             };
             if (turns == 9 && winnerO == false && winnerX ==false) {
                 console.log('It is a tie');
-            }
+            };
         };
     };
 
-})();
+    const btn = document.getElementById('restart');
+    btn.addEventListener('click', (e) => {
+        let oldGame = document.getElementById('gameboard');
 
-const game = (() => {
-    viewModule.buildBoard('div.gameboard','tile','');
+        function removeAllChildNodes(parent) {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
+        removeAllChildNodes(oldGame);
+        viewModule.buildBoard('div#gameboard','tile','');
+        dataModule.buildBoard(9);
+        turns = 0;
+        dice = 'X';
+    });
 })();
-
-//.attributes.tileposition.value
