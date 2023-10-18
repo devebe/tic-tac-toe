@@ -100,9 +100,7 @@ const controllerModule = (() => {
                 turns++;
             };
         }
-        console.log(turns);
-        console.log({playerX , playerO});
-        checkWinner(playerX.ownsTiles, playerO.ownsTiles, winStates);
+        checkWinner(playerX.ownsTiles, playerO.ownsTiles, winStates,turns);
     });
 
     const winStates = [
@@ -111,16 +109,19 @@ const controllerModule = (() => {
         [1,5,9], [3,5,7]
     ];
 
-    function checkWinner(arrX, arrO, winStates) {
+    function checkWinner(arrX, arrO, winStates,turns) {
         for (let i = 0; i < winStates.length; i++) {
             let winnerX = winStates[i].every(element => arrX.includes(element));
             if (winnerX == true){
-                console.log(`Player X has won`);
+                console.log('Player X has won');
             };
             let winnerO = winStates[i].every(element => arrO.includes(element));
             if (winnerO == true){
-                console.log(`Player O has won`);
+                console.log('Player O has won');
             };
+            if (turns == 9 && winnerO == false && winnerX ==false) {
+                console.log('It is a tie');
+            }
         };
     };
 
@@ -128,8 +129,6 @@ const controllerModule = (() => {
 
 const game = (() => {
     viewModule.buildBoard('div.gameboard','tile','');
-    
-    return console.log(dataModule.board);
 })();
 
 //.attributes.tileposition.value
