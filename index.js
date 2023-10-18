@@ -1,19 +1,3 @@
-// Create a gameboard object
-
-// A gameboard consists of 9 tiles
-// A gameboard can be cleared after a game
-// A gameboard has tiles
-// A gameboard has players
-
-// A player has a name
-// A player has a character X or O
-// A player can pick a tile on the gameboard
-
-// Tiles can be seen as objects with 3 properties: 
-// - isChecked (boolean) [false], 
-// - ownedBy (playerName) [empty], 
-// - position (number) [0]
-
 const dataModule = (() => {
 
     const board = [];
@@ -64,7 +48,7 @@ const viewModule = (() => {
         parent.appendChild(child);
     };
 
-    function buildBoard(parent, name, text, tiles) {
+    const buildBoard = (parent, name, text, tiles) => {
         for (let i = 0; i < tiles; i++) {
             viewTile(parent, name, text, (i + 1));
         };
@@ -74,20 +58,22 @@ const viewModule = (() => {
 
 })();
 
-const controllerModule = (() => {
-    const buildGame = (tiles) => {
-        viewModule.buildBoard('div#gameboard','tile','',tiles);
-        dataModule.buildBoard(tiles);
-    };
-
-    buildGame(9);
-    
+const controllerModule = (() => { 
     let turns = 0;
     let dice = 'X';
     const playerX = dataModule.playerFactory('X');
     const playerO = dataModule.playerFactory('O');
+    const btn = document.getElementById('restart');
+    const gameboard = document.getElementById('gameboard');
+
+    const buildGame = (tiles) => {
+        dataModule.buildBoard(tiles);
+        viewModule.buildBoard('div#gameboard','tile','',tiles);
+    };
+
+    buildGame(9);
     
-    document.addEventListener('click', (e) => {
+    gameboard.addEventListener('click', (e) => {
         if ( dice == 'X') {
             let bool = playerX.setTile(e.target.id);
             e.target.textContent = dataModule.board[e.target.id - 1].owner;
@@ -113,7 +99,7 @@ const controllerModule = (() => {
         [1,5,9], [3,5,7]
     ];
 
-    function checkWinner(arrX, arrO, winStates,turns) {
+    const checkWinner = (arrX, arrO, winStates,turns) => {
         for (let i = 0; i < winStates.length; i++) {
             let winnerX = winStates[i].every(element => arrX.includes(element));
             if (winnerX == true){
@@ -129,7 +115,6 @@ const controllerModule = (() => {
         };
     };
 
-    const btn = document.getElementById('restart');
     btn.addEventListener('click', (e) => {
         let oldGame = document.getElementById('gameboard');
         function removeAllChildNodes(parent) {
@@ -139,5 +124,7 @@ const controllerModule = (() => {
         };
         removeAllChildNodes(oldGame);
         buildGame(9);
+        turns = 0;
+        dice = 'X';
     });
 })();
