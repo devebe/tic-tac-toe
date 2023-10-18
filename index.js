@@ -19,7 +19,7 @@ const dataModule = (() => {
     const board = [];
 
     const tileFactory = (tilePosition) => {
-        let owner = null;
+        let owner = "-";
         let isChecked = false;
         return {tilePosition, owner, isChecked};
     };
@@ -38,16 +38,18 @@ const dataModule = (() => {
         let ownsTiles = [];
         const setTile = (tilePosition) => {
             let tile = board[tilePosition - 1];
-            if (tile.owner == null) {
+            if (tile.owner == "-") {
                 tile.isChecked = true;
                 tile.owner = name;
-                ownsTiles.push(tile);
+                ownsTiles.push(tile.tilePosition);
+                return true;
             };
+            return false;
         };
         return {name, ownsTiles, setTile};
     };
    
-    buildBoard(90);
+    buildBoard(9);
 
     return {board, playerFactory};
 
@@ -79,23 +81,49 @@ const controllerModule = (() => {
     const playerX = dataModule.playerFactory('X');
     const playerO = dataModule.playerFactory('O');
     let turns = 0;
+    let dice = 'X';
     
     document.addEventListener('click', (e) => {
-        if (turns % 2 == 0) {
-            playerX.setTile(e.target.id);
+        if ( dice === 'X') {
+            let bool = playerX.setTile(e.target.id);
             e.target.textContent = dataModule.board[e.target.id - 1].owner;
-            e.target.style.pointerEvents = "none";
+            if(bool == true) {
+                dice = 'O';
+                turns++;
+            };
         }
         else {
-            playerO.setTile(e.target.id);
+            let bool = playerO.setTile(e.target.id);
             e.target.textContent = dataModule.board[e.target.id - 1].owner;
-            e.target.style.pointerEvents = "none";
+            if(bool == true) {
+                dice = 'X';
+                turns++;
+            };
         }
-        console.log(dataModule.board);
-        turns++;
         console.log(turns);
+        console.log({playerX , playerO});
+        checkWinner(playerX.ownsTiles, playerO.ownsTiles, winStates);
     });
-    
+
+    const winStates = [
+        [1,2,3], [4,5,6], [7,8,9],
+        [1,4,7], [2,5,8], [3,6,9],
+        [1,5,9], [3,5,7]
+    ];
+
+    function checkWinner(arrX, arrO, winStates) {
+        for (let i = 0; i < winStates.length; i++) {
+            let winnerX = winStates[i].every(element => arrX.includes(element));
+            if (winnerX == true){
+                console.log(`Player X has won`);
+            };
+            let winnerO = winStates[i].every(element => arrO.includes(element));
+            if (winnerO == true){
+                console.log(`Player O has won`);
+            };
+        };
+    };
+
 })();
 
 const game = (() => {
