@@ -47,7 +47,7 @@ const dataModule = (() => {
         return {name, ownsTiles, setTile};
     };
    
-    buildBoard(9);
+    buildBoard(90);
 
     return {board, playerFactory};
 
@@ -83,11 +83,13 @@ const controllerModule = (() => {
     document.addEventListener('click', (e) => {
         if (turns % 2 == 0) {
             playerX.setTile(e.target.id);
-            e.target.textContent = dataModule.board[e.target.id].owner;
+            e.target.textContent = dataModule.board[e.target.id - 1].owner;
+            e.target.style.pointerEvents = "none";
         }
         else {
             playerO.setTile(e.target.id);
-            e.target.textContent = playerO.name;
+            e.target.textContent = dataModule.board[e.target.id - 1].owner;
+            e.target.style.pointerEvents = "none";
         }
         console.log(dataModule.board);
         turns++;
