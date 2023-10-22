@@ -45,7 +45,7 @@ table {
 body {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 0.5em;
     font-family: 'Graphik', Arial, sans-serif;
     color:#00183d
 }

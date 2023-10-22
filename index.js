@@ -54,7 +54,11 @@ const viewModule = (() => {
         };
     };
 
-    return {buildBoard};
+    const viewInfoMessage = (message) => {
+        viewTile('div.alert', 'gameresult', message, '');
+    }
+
+    return {buildBoard, viewInfoMessage};
 
 })();
 
@@ -103,28 +107,19 @@ const controllerModule = (() => {
         for (let i = 0; i < winStates.length; i++) {
             let winnerX = winStates[i].every(element => arrX.includes(element));
             if (winnerX == true){
-                console.log('Player X has won');
+                viewModule.viewInfoMessage('Player X has won');
             };
             let winnerO = winStates[i].every(element => arrO.includes(element));
             if (winnerO == true){
-                console.log('Player O has won');
+                viewModule.viewInfoMessage('Player O has won');
             };
             if (turns == 9 && winnerO == false && winnerX ==false) {
-                console.log('It is a tie');
+                viewModule.viewInfoMessage('It is a tie');
             };
-        };
+        };   
     };
 
     btn.addEventListener('click', (e) => {
-        let oldGame = document.getElementById('gameboard');
-        function removeAllChildNodes(parent) {
-            while (parent.firstChild) {
-                parent.removeChild(parent.firstChild);
-            };
-        };
-        removeAllChildNodes(oldGame);
-        buildGame(9);
-        turns = 0;
-        dice = 'X';
+        location.reload();
     });
 })();
