@@ -77,6 +77,10 @@ const viewModule = (() => {
     };
 
     const displayInfoMessage = (message) => {
+        const infomessage = new Component('infomessage','body');
+        infomessage.id = 'infomessage';
+        buildComponent(infomessage);
+        
         const alert = new Component('alert','infomessage');
         alert.id = 'alert';
         alert.text = message;
@@ -87,7 +91,7 @@ const viewModule = (() => {
         close.tagType = 'button'
         close.text = 'x';
         buildComponent(close);
-    }
+    };
 
     return {displayBoard, displayInfoMessage};
 
@@ -116,11 +120,13 @@ const controllerModule = (() => {
             if (winnerX == true){
                 console.log('Player X has won');
                 viewModule.displayInfoMessage('Player X has won');
+                gameboard.removeEventListener();
             };
             let winnerO = winStates[i].every(element => arrO.includes(element));
             if (winnerO == true){
                 console.log('Player O has won');
                 viewModule.displayInfoMessage('Player O has won');
+                gameboard.removeEventListener();
             };
             if (checkEmpty(data) == false && winnerO == false && winnerX == false) {
                 console.log('It is a tie');

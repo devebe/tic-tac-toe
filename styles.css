@@ -84,6 +84,19 @@ h1 {
     justify-items: center;
 }
 
+#infomessage {
+    display: flex;
+    width: 60vw;
+    flex-direction: row;
+    align-self: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background-color: #c2daff;
+    margin: 0rem 4rem;
+    border-radius: 0.5rem;
+}
+
 .tile {
     display: flex;
     height: 20vh;
@@ -116,5 +129,11 @@ button:hover {
 button:active {
     background-color: #003585;
     cursor: default;
+}
+
+#infomessage > button {
+    height: 2em;
+    width: 2em;
+    padding: 0;
 }
 
